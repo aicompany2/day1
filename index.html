@@ -79,6 +79,14 @@
     .card h3 { margin-bottom: 6px; }
     .card .emoji { font-size: 2rem; }
 
+    .demo-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+    .demo-btns button { font: inherit; padding: 10px 16px; border: 0; border-radius: 8px; background: #0b7285; color: #fff; cursor: pointer; }
+    .demo-btns button:hover { background: #095c6b; }
+    .demo-btns button.active { background: #e8590c; }
+    .demo-hint { color: #666; }
+    #demo-frame { width: 100%; height: 85vh; min-height: 560px; border: 1px solid #ccc; border-radius: 10px; background: #fff; }
+    #demo-frame[hidden] { display: none; }
+
     footer { text-align: center; color: #666; padding: 16px; font-size: .9rem; }
 
     /* 모바일 */
@@ -113,6 +121,7 @@
           <li><a href="#food" data-page="food">음식점</a></li>
           <li><a href="#bus" data-page="bus">버스</a></li>
           <li><a href="#sights" data-page="sights">관광지</a></li>
+          <li><a href="#study" data-page="study">배열 학습</a></li>
         </ul>
       </nav>
     </div>
@@ -168,6 +177,18 @@
         <div class="card"><div class="emoji">🌿</div><h3>비자림</h3><p>천년 비자나무 숲 산책길</p></div>
       </div>
     </section>
+    <section class="page" id="study">
+      <h1>🧠 배열 학습</h1>
+      <p>버튼을 누르면 해당 애니메이션이 아래에 표시됩니다.</p>
+      <div class="demo-btns">
+        <button type="button" data-src="array-steps.html">🔢 숫자 100개 합계</button>
+        <button type="button" data-src="array-cart.html">🛒 과일 3종 장바구니</button>
+        <button type="button" data-src="array-apple.html">🍎 사과 배열 반복문</button>
+        <button type="button" data-src="array-shop.html">🏪 장바구니 50개 쇼핑</button>
+      </div>
+      <p id="demo-hint" class="demo-hint">위 버튼 중 하나를 선택하세요.</p>
+      <iframe id="demo-frame" title="배열 학습 애니메이션" hidden></iframe>
+    </section>
   </main>
 
   <footer>© 마라도 여행 가이드 · 이재오</footer>
@@ -198,6 +219,15 @@
       hamburger.classList.toggle('open', open);
       hamburger.setAttribute('aria-expanded', String(open));
     });
+
+    const demoBtns = document.querySelectorAll('.demo-btns button');
+    const demoFrame = document.getElementById('demo-frame');
+    demoBtns.forEach(btn => btn.addEventListener('click', () => {
+      demoBtns.forEach(b => b.classList.toggle('active', b === btn));
+      demoFrame.src = btn.dataset.src;
+      demoFrame.hidden = false;
+      document.getElementById('demo-hint').hidden = true;
+    }));
 
     window.addEventListener('hashchange', showPage);
     showPage();
